@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contigo Call Center</title>
-<meta name="description" content="Soluciones de infraestructura, ciberseguridad y continuidad operativa para la transformación digital empresarial.">
+<meta name="description" content="Contigo Call Center: atención al cliente, gestión de siniestros y seguimiento de casos con un servicio cercano y eficiente.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -209,6 +209,213 @@
   .solution-card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
   .solution-card .arrow { color: var(--cyan); text-align: right; margin-top: 12px; }
 
+  /* Teaser de servicios en Inicio */
+  .services-teaser {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .service-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 14px 22px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    box-shadow: 0 8px 20px rgba(10,37,64,.04);
+    transition: all .3s ease;
+    cursor: pointer;
+  }
+  .service-pill i { color: var(--blue); font-size: 17px; }
+  .service-pill:hover {
+    border-color: var(--blue);
+    background: var(--navy);
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(20,85,192,.18);
+  }
+  .service-pill:hover i { color: var(--cyan-bright); }
+  .teaser-cta { text-align: center; margin-bottom: 40px; }
+
+  /* Highlight strip (debajo del hero) */
+  .highlight-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin: -34px 0 50px;
+    position: relative;
+    z-index: 2;
+  }
+  .highlight-chip {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 12px 28px rgba(10,37,64,.08);
+  }
+  .highlight-chip i {
+    font-size: 22px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .highlight-chip span {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 13.5px;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+
+  /* Teaser de servicios en Inicio */
+  .service-chip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .service-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 12px 22px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--navy);
+    transition: all .25s ease;
+  }
+  .service-chip i { color: var(--blue); font-size: 15px; }
+  .service-chip:hover {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+    transform: translateY(-3px);
+  }
+  .service-chip:hover i { color: var(--cyan-bright); }
+
+  .see-all-wrap { text-align: center; margin-bottom: 50px; }
+  .btn-outline {
+    display: inline-block;
+    border: 2px solid var(--blue);
+    color: var(--blue) !important;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all .25s ease;
+  }
+  .btn-outline:hover { background: var(--blue); color: #fff !important; }
+
+  /* Por qué elegirnos */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 50px;
+  }
+  .why-card {
+    text-align: center;
+    padding: 26px 18px;
+  }
+  .why-card i {
+    font-size: 30px;
+    color: var(--blue);
+    width: 64px;
+    height: 64px;
+    line-height: 64px;
+    border-radius: 50%;
+    background: #EAF2FF;
+    margin: 0 auto 16px;
+    display: block;
+  }
+  .why-card h4 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--navy);
+    margin: 0 0 8px;
+  }
+  .why-card p { font-size: 13.5px; color: var(--muted); line-height: 1.5; margin: 0; }
+
+  /* Proceso (en Servicios) */
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin: 40px 0 10px;
+    position: relative;
+  }
+  .process-step {
+    text-align: center;
+    padding: 0 16px;
+    position: relative;
+  }
+  .process-step::before {
+    content: '';
+    position: absolute;
+    top: 26px;
+    left: -50%;
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+  }
+  .process-step:first-child::before { display: none; }
+  .process-num {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px;
+    position: relative;
+    z-index: 1;
+  }
+  .process-step h4 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    margin: 0 0 6px;
+  }
+  .process-step p { font-size: 13px; color: var(--muted); line-height: 1.5; margin: 0; }
+
+  @media (max-width: 900px) {
+    .highlight-strip { grid-template-columns: 1fr 1fr; margin-top: 20px; }
+    .why-grid { grid-template-columns: 1fr 1fr; }
+    .process-steps { grid-template-columns: 1fr; gap: 30px; }
+    .process-step::before { display: none; }
+  }
+
   /* CTA */
   .cta-banner {
     background: linear-gradient(135deg, var(--navy) 0%, #0052CC 60%, var(--cyan) 100%);
@@ -392,63 +599,24 @@
   <!-- INICIO -->
   <section id="inicio" class="page active">
     <div class="hero">
-      <h1>TECNOLOGÍA QUE <span>IMPULSA TU OPERACIÓN</span></h1>
-      <p>Soluciones de infraestructura, ciberseguridad y continuidad operativa diseñadas para la transformación digital empresarial.</p>
+      <h1>CERCANÍA Y EFICIENCIA <span>EN CADA INTERACCIÓN</span></h1>
+      <p>Atención al cliente, gestión de siniestros y seguimiento de casos, con un equipo humano comprometido con la experiencia de tu marca.</p>
       <a href="#" class="btn-primary" data-target="servicios">Conoce más &rarr;</a>
     </div>
 
     <div class="section-title">Nuestros Servicios</div>
-    <div class="section-subtitle">Experiencia, cercanía y eficiencia en cada interacción con tus clientes.</div>
+    <div class="section-subtitle">Todo lo que hacemos, pensado para tu cliente.</div>
 
-    <div class="solutions-grid">
-      <div class="solution-card">
-        <div>
-          <i class="fa-solid fa-headset icon"></i>
-          <h3>ATENCIÓN AL CLIENTE</h3>
-          <p>Servicio cercano, ágil y personalizado en cada punto de contacto, orientado a resolver y a fortalecer la relación con tus clientes.</p>
-        </div>
-        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      </div>
-      <div class="solution-card">
-        <div>
-          <i class="fa-solid fa-file-shield icon"></i>
-          <h3>GESTIÓN Y SEGUIMIENTO DE SINIESTROS</h3>
-          <p>Acompañamiento completo en cada etapa del siniestro, con seguimiento riguroso y comunicación clara hasta su cierre.</p>
-        </div>
-        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      </div>
-      <div class="solution-card">
-        <div>
-          <i class="fa-solid fa-truck icon"></i>
-          <h3>VALIDACIÓN DE ENTREGAS</h3>
-          <p>Confirmación y verificación oportuna de entregas, garantizando trazabilidad y confianza en cada proceso.</p>
-        </div>
-        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      </div>
-      <div class="solution-card">
-        <div>
-          <i class="fa-solid fa-inbox icon"></i>
-          <h3>ATENCIÓN DE SOLICITUDES Y REQUERIMIENTOS</h3>
-          <p>Gestión eficiente de solicitudes con respuestas oportunas, claras y ajustadas a las necesidades de cada cliente.</p>
-        </div>
-        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      </div>
-      <div class="solution-card">
-        <div>
-          <i class="fa-solid fa-magnifying-glass-chart icon"></i>
-          <h3>SEGUIMIENTO DE CASOS</h3>
-          <p>Monitoreo constante del estado de cada caso, asegurando cumplimiento de tiempos y calidad en cada respuesta.</p>
-        </div>
-        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      </div>
-      <div class="solution-card">
-        <div>
-          <i class="fa-solid fa-comments icon"></i>
-          <h3>ATENCIÓN MULTICANAL</h3>
-          <p>Presencia y consistencia en cada canal —telefónico, correo, chat y más— para que tu cliente sea atendido donde lo necesite.</p>
-        </div>
-        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      </div>
+    <div class="services-teaser">
+      <div class="service-pill" data-target="servicios"><i class="fa-solid fa-headset"></i> Atención al Cliente</div>
+      <div class="service-pill" data-target="servicios"><i class="fa-solid fa-file-shield"></i> Gestión de Siniestros</div>
+      <div class="service-pill" data-target="servicios"><i class="fa-solid fa-truck"></i> Validación de Entregas</div>
+      <div class="service-pill" data-target="servicios"><i class="fa-solid fa-inbox"></i> Solicitudes y Requerimientos</div>
+      <div class="service-pill" data-target="servicios"><i class="fa-solid fa-magnifying-glass-chart"></i> Seguimiento de Casos</div>
+      <div class="service-pill" data-target="servicios"><i class="fa-solid fa-comments"></i> Atención Multicanal</div>
+    </div>
+    <div class="teaser-cta">
+      <a href="#" class="btn-primary" data-target="servicios">Ver todos los servicios &rarr;</a>
     </div>
 
     <div class="cta-banner">
@@ -534,8 +702,68 @@
 
   <!-- SERVICIOS -->
   <section id="servicios" class="page">
-    <div class="section-title">Servicios Especializados</div>
-    <div class="section-subtitle" style="max-width:640px;margin-left:auto;margin-right:auto;">Especialistas en atención al cliente, soporte técnico de TI e infraestructura gestionada.</div>
+    <div class="section-title">Nuestros Servicios</div>
+    <div class="section-subtitle" style="max-width:640px;margin-left:auto;margin-right:auto;">Experiencia, cercanía y eficiencia en cada interacción con tus clientes.</div>
+
+    <div class="solutions-grid">
+      <div class="solution-card">
+        <div>
+          <i class="fa-solid fa-headset icon"></i>
+          <h3>ATENCIÓN AL CLIENTE</h3>
+          <p>Servicio cercano, ágil y personalizado en cada punto de contacto, orientado a resolver y a fortalecer la relación con tus clientes.</p>
+        </div>
+        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="solution-card">
+        <div>
+          <i class="fa-solid fa-file-shield icon"></i>
+          <h3>GESTIÓN Y SEGUIMIENTO DE SINIESTROS</h3>
+          <p>Acompañamiento completo en cada etapa del siniestro, con seguimiento riguroso y comunicación clara hasta su cierre.</p>
+        </div>
+        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="solution-card">
+        <div>
+          <i class="fa-solid fa-truck icon"></i>
+          <h3>VALIDACIÓN DE ENTREGAS</h3>
+          <p>Confirmación y verificación oportuna de entregas, garantizando trazabilidad y confianza en cada proceso.</p>
+        </div>
+        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="solution-card">
+        <div>
+          <i class="fa-solid fa-inbox icon"></i>
+          <h3>ATENCIÓN DE SOLICITUDES Y REQUERIMIENTOS</h3>
+          <p>Gestión eficiente de solicitudes con respuestas oportunas, claras y ajustadas a las necesidades de cada cliente.</p>
+        </div>
+        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="solution-card">
+        <div>
+          <i class="fa-solid fa-magnifying-glass-chart icon"></i>
+          <h3>SEGUIMIENTO DE CASOS</h3>
+          <p>Monitoreo constante del estado de cada caso, asegurando cumplimiento de tiempos y calidad en cada respuesta.</p>
+        </div>
+        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="solution-card">
+        <div>
+          <i class="fa-solid fa-comments icon"></i>
+          <h3>ATENCIÓN MULTICANAL</h3>
+          <p>Presencia y consistencia en cada canal —telefónico, correo, chat y más— para que tu cliente sea atendido donde lo necesite.</p>
+        </div>
+        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+    </div>
+
+    <div class="cta-banner">
+      <div>
+        <span class="cta-tag"><i class="fa-solid fa-comment-dots"></i> HABLEMOS</span>
+        <h2>¿Listos para mejorar la experiencia de tus clientes?</h2>
+        <p>Cuéntanos qué necesitas y te mostramos cómo podemos acompañarte con un servicio cercano y eficiente.</p>
+      </div>
+      <a href="#" class="btn-light" data-target="contacto">Contáctanos &rarr;</a>
+    </div>
   </section>
 
   <!-- CONTACTO -->
