@@ -996,10 +996,11 @@
       </div>
 
       <div class="contact-form-card">
-    <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/datrox101@hotmail.com" method="POST" enctype="multipart/form-data">
+    <form class="contact-form" id="contactForm" action="https://formsubmit.co/datrox101@hotmail.com" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_subject" id="formSubjectHidden" value="Nuevo mensaje de contacto - Contigo Call Center">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://ing-dgm.github.io/contigocallcenter.github.io-pagina/?enviado=1#contacto">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
       <div>
@@ -1051,59 +1052,42 @@
     });
   });
 
-  // Formulario de contacto: envío real mediante Web3Forms (gratuito).
-  // Los mensajes llegan directo al correo configurado en el "access_key" del formulario.
+  // Formulario de contacto: envío real mediante FormSubmit.co (gratuito, con adjuntos).
+  // Al enviar, el navegador hace un POST normal a FormSubmit (necesario para que el
+  // adjunto llegue bien) y FormSubmit redirige de vuelta aquí mismo con "?enviado=1".
   const form = document.getElementById('contactForm');
   const success = document.getElementById('formSuccess');
   const errorBox = document.getElementById('formError');
-  const submitBtn = document.getElementById('submitBtn');
   const cvInput = document.getElementById('cv');
   const MAX_CV_SIZE = 10 * 1024 * 1024; // 10MB
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    success.style.display = 'none';
+  form.addEventListener('submit', (e) => {
     errorBox.style.display = 'none';
 
-    // Validar tamaño máximo del adjunto (10MB)
+    // Validar tamaño máximo del adjunto (10MB) antes de dejar enviar
     if (cvInput.files.length > 0 && cvInput.files[0].size > MAX_CV_SIZE) {
+      e.preventDefault();
       errorBox.textContent = 'El archivo adjunto supera el tamaño máximo permitido de 10MB. Por favor, adjunta un archivo más liviano.';
       errorBox.style.display = 'block';
       return;
     }
 
-    const nombre = document.getElementById('nombre').value;
+    // Reflejar el asunto escrito por la persona en el asunto real del correo
     const asunto = document.getElementById('asunto').value;
     document.getElementById('formSubjectHidden').value = 'Contacto Web: ' + asunto;
-    const originalBtnText = submitBtn.textContent;
-    submitBtn.textContent = 'Enviando...';
-    submitBtn.disabled = true;
-
-    try {
-      const formData = new FormData(form);
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
-      const result = await response.json();
-
-      if (response.ok) {
-        success.textContent = `¡Gracias ${nombre}! Tu mensaje ha sido enviado correctamente. Te responderemos pronto.`;
-        success.style.display = 'block';
-        form.reset();
-      } else {
-        throw new Error(result.message || 'No se pudo enviar el mensaje.');
-      }
-    } catch (err) {
-      errorBox.textContent = 'Hubo un problema al enviar tu mensaje: ' + err.message + '. Si el problema persiste, escríbenos directamente a contacto@contigocallcenter.com.';
-      errorBox.style.display = 'block';
-      console.error('Error al enviar el formulario:', err);
-    } finally {
-      submitBtn.textContent = originalBtnText;
-      submitBtn.disabled = false;
-    }
+    // No se previene el envío: el formulario viaja normalmente a FormSubmit.
   });
+
+  // Si venimos de vuelta de un envío exitoso (FormSubmit nos redirigió aquí), mostramos
+  // el aviso de éxito en la sección de Contacto y limpiamos la URL.
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('enviado') === '1') {
+    showPage('contacto');
+    success.textContent = '¡Gracias! Tu mensaje ha sido enviado correctamente. Te responderemos pronto.';
+    success.style.display = 'block';
+    const cleanUrl = window.location.pathname + '#contacto';
+    window.history.replaceState({}, document.title, cleanUrl);
+  }
 
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
