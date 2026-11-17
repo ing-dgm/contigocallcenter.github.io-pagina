@@ -1093,8 +1093,9 @@
         throw new Error(result.message || 'No se pudo enviar el mensaje.');
       }
     } catch (err) {
-      errorBox.textContent = 'Hubo un problema al enviar tu mensaje. Por favor, inténtalo de nuevo o escríbenos directamente a contacto@contigocallcenter.com.';
+      errorBox.textContent = 'Hubo un problema al enviar tu mensaje: ' + err.message + '. Si el problema persiste, escríbenos directamente a contacto@contigocallcenter.com.';
       errorBox.style.display = 'block';
+      console.error('Error al enviar el formulario:', err);
     } finally {
       submitBtn.textContent = originalBtnText;
       submitBtn.disabled = false;
