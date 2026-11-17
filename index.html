@@ -996,10 +996,11 @@
       </div>
 
       <div class="contact-form-card">
-    <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="access_key" value="bfb6b2df-c192-4cea-8e93-0cdeaf9da4f7">
-      <input type="hidden" name="from_name" value="Formulario web - Contigo Call Center">
-      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+    <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/datrox101@hotmail.com" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="_subject" id="formSubjectHidden" value="Nuevo mensaje de contacto - Contigo Call Center">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
       <div>
         <label for="nombre">Nombre completo</label>
@@ -1072,6 +1073,8 @@
     }
 
     const nombre = document.getElementById('nombre').value;
+    const asunto = document.getElementById('asunto').value;
+    document.getElementById('formSubjectHidden').value = 'Contacto Web: ' + asunto;
     const originalBtnText = submitBtn.textContent;
     submitBtn.textContent = 'Enviando...';
     submitBtn.disabled = true;
@@ -1085,7 +1088,7 @@
       });
       const result = await response.json();
 
-      if (response.status === 200) {
+      if (response.ok) {
         success.textContent = `¡Gracias ${nombre}! Tu mensaje ha sido enviado correctamente. Te responderemos pronto.`;
         success.style.display = 'block';
         form.reset();
