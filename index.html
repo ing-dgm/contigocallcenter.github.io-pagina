@@ -109,6 +109,28 @@
     transition: background .2s ease, transform .2s ease;
   }
   #lightboxClose:hover { background: rgba(255,255,255,.25); transform: scale(1.08); }
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,.12);
+    color: #fff;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .lightbox-nav.show { display: flex; }
+  .lightbox-nav:hover { background: rgba(255,255,255,.25); transform: translateY(-50%) scale(1.08); }
+  #lightboxPrev { left: 18px; }
+  #lightboxNext { right: 18px; }
   .collage-card img, .collage-card .carousel { cursor: zoom-in; }
 
   /* Animación al hacer scroll */
@@ -897,7 +919,9 @@
 
 <div id="lightbox">
   <button type="button" id="lightboxClose" aria-label="Cerrar">&times;</button>
+  <button type="button" id="lightboxPrev" class="lightbox-nav" aria-label="Anterior">&lsaquo;</button>
   <img id="lightboxImg" src="" alt="">
+  <button type="button" id="lightboxNext" class="lightbox-nav" aria-label="Siguiente">&rsaquo;</button>
 </div>
 
 <div class="wrap">
@@ -1347,19 +1371,45 @@
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+  let lightboxImages = [];
+  let lightboxIndex = 0;
+
+  function showLightboxImage() {
+    const img = lightboxImages[lightboxIndex];
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    const hasMultiple = lightboxImages.length > 1;
+    lightboxPrev.classList.toggle('show', hasMultiple);
+    lightboxNext.classList.toggle('show', hasMultiple);
+  }
 
   document.querySelectorAll('.collage-card img').forEach((img) => {
     img.addEventListener('click', () => {
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
+      // Si la foto pertenece a un carrusel, reunimos todas sus fotos para poder navegar.
+      const track = img.closest('.carousel-track');
+      lightboxImages = track ? Array.from(track.querySelectorAll('img')) : [img];
+      lightboxIndex = lightboxImages.indexOf(img);
+      showLightboxImage();
       lightbox.classList.add('open');
     });
   });
 
   function closeLightbox() { lightbox.classList.remove('open'); lightboxImg.src = ''; }
+  function lightboxNextImg() { lightboxIndex = (lightboxIndex + 1) % lightboxImages.length; showLightboxImage(); }
+  function lightboxPrevImg() { lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length; showLightboxImage(); }
+
   lightboxClose.addEventListener('click', closeLightbox);
+  lightboxNext.addEventListener('click', lightboxNextImg);
+  lightboxPrev.addEventListener('click', lightboxPrevImg);
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') lightboxNextImg();
+    if (e.key === 'ArrowLeft') lightboxPrevImg();
+  });
 </script>
 </body>
 </html>
