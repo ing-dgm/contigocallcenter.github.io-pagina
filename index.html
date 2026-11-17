@@ -547,6 +547,66 @@
     transition: transform .35s cubic-bezier(.175,.885,.32,1.275), box-shadow .35s ease;
   }
   .collage-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; display: block; }
+
+  /* Carrusel dentro de una tarjeta del collage */
+  .carousel {
+    position: relative;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform .5s ease;
+  }
+  .carousel-track img {
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    border-radius: 0;
+  }
+  .carousel-prev, .carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(10,37,64,.55);
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background .2s ease;
+  }
+  .carousel-prev:hover, .carousel-next:hover { background: var(--blue); }
+  .carousel-prev { left: 8px; }
+  .carousel-next { right: 8px; }
+  .carousel-dots {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    z-index: 2;
+  }
+  .carousel-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.6);
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .carousel-dot.active { background: #fff; transform: scale(1.3); }
   .collage-caption {
     text-align: center;
     font-family: 'Manrope', sans-serif;
@@ -927,19 +987,38 @@
     <div class="section-subtitle">Espacios pensados para tu comodidad y bienestar durante la jornada.</div>
     <div class="collage">
       <div class="collage-card r1">
-        <img src="images/ofcallcenter.webp" alt="Oficina">
+        <div class="carousel" data-interval="3500">
+          <div class="carousel-track">
+            <img src="images/C%20oficinas%201.jpg" alt="Oficina 1">
+            <img src="images/C%20oficinas%202.jpg" alt="Oficina 2">
+            <img src="images/C%20oficinas%203.jpg" alt="Oficina 3">
+            <img src="images/C%20oficinas%204.jpg" alt="Oficina 4">
+            <img src="images/C%20oficinas%205.jpg" alt="Oficina 5">
+            <img src="images/C%20oficinas%206.jpg" alt="Oficina 6">
+          </div>
+          <button type="button" class="carousel-prev" aria-label="Anterior">&lsaquo;</button>
+          <button type="button" class="carousel-next" aria-label="Siguiente">&rsaquo;</button>
+          <div class="carousel-dots"></div>
+        </div>
         <div class="collage-caption">Oficina</div>
       </div>
       <div class="collage-card r2">
-        <img src="images/sdescanso.avif" alt="Sala de descanso">
+        <img src="images/Descanso%201.jpg" alt="Sala de descanso">
         <div class="collage-caption">Sala de descanso</div>
       </div>
       <div class="collage-card r3">
-        <img src="images/sdescanso2.webp" alt="Sala de lactancia">
+        <img src="images/Maternidad.jpg" alt="Sala de lactancia">
         <div class="collage-caption">Sala de lactancia</div>
       </div>
       <div class="collage-card r4">
-        <img src="images/cafeteria.avif" alt="Cafetería">
+        <div class="carousel" data-interval="3500">
+          <div class="carousel-track">
+            <img src="images/Cafeteria%201.jpg" alt="Cafetería 1">
+          </div>
+          <button type="button" class="carousel-prev" aria-label="Anterior">&lsaquo;</button>
+          <button type="button" class="carousel-next" aria-label="Siguiente">&rsaquo;</button>
+          <div class="carousel-dots"></div>
+        </div>
         <div class="collage-caption">Cafetería</div>
       </div>
     </div>
@@ -1169,6 +1248,56 @@
     });
   }, { threshold: 0.15 });
   revealEls.forEach(el => revealObserver.observe(el));
+
+  // Carruseles de fotos (Oficina, Cafetería, etc.)
+  document.querySelectorAll('.carousel').forEach((carousel) => {
+    const track = carousel.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const prevBtn = carousel.querySelector('.carousel-prev');
+    const nextBtn = carousel.querySelector('.carousel-next');
+    const dotsWrap = carousel.querySelector('.carousel-dots');
+    let index = 0;
+    let timer = null;
+
+    if (slides.length <= 1) {
+      // Una sola foto: se muestra como imagen fija, sin flechas ni puntos.
+      if (prevBtn) prevBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+      return;
+    }
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    function update() {
+      track.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    }
+    function goTo(i) {
+      index = (i + slides.length) % slides.length;
+      update();
+      resetTimer();
+    }
+    function next() { goTo(index + 1); }
+    function prev() { goTo(index - 1); }
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(next, parseInt(carousel.dataset.interval, 10) || 4000);
+    }
+
+    nextBtn.addEventListener('click', next);
+    prevBtn.addEventListener('click', prev);
+    carousel.addEventListener('mouseenter', () => clearInterval(timer));
+    carousel.addEventListener('mouseleave', resetTimer);
+
+    update();
+    resetTimer();
+  });
 </script>
 </body>
 </html>
