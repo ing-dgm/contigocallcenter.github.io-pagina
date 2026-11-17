@@ -32,12 +32,56 @@
     background-color: var(--bg);
     color: var(--ink);
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
   }
+
+  /* Pantalla de bienvenida con el logo */
+  #introOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity .6s ease, visibility .6s ease;
+  }
+  #introOverlay img {
+    width: 180px;
+    opacity: 0;
+    transform: scale(.85);
+    animation: introLogoPop .9s cubic-bezier(.19,1,.22,1) forwards;
+  }
+  #introOverlay.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
+  @keyframes introLogoPop {
+    0% { opacity: 0; transform: scale(.8); }
+    60% { opacity: 1; transform: scale(1.04); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  /* Formas decorativas de fondo */
+  .bg-blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(70px);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .bg-blob-1 { top: -120px; right: -120px; width: 420px; height: 420px; background: rgba(20,85,192,.10); }
+  .bg-blob-2 { top: 900px; left: -160px; width: 380px; height: 380px; background: rgba(0,163,224,.09); }
+  .bg-blob-3 { top: 2200px; right: -140px; width: 400px; height: 400px; background: rgba(10,37,64,.07); }
+  .bg-blob-4 { top: 3400px; left: -120px; width: 360px; height: 360px; background: rgba(0,163,224,.08); }
+
+  /* Animación al hacer scroll */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 
   .wrap {
     max-width: 1360px;
     margin: 0 auto;
     padding: 20px 24px 60px;
+    position: relative;
+    z-index: 1;
   }
 
   /* Topbar */
@@ -742,6 +786,16 @@
 </style>
 </head>
 <body>
+
+<div id="introOverlay">
+  <img src="images/Contigo%20logo%20P.png" alt="Contigo Call Center">
+</div>
+
+<div class="bg-blob bg-blob-1"></div>
+<div class="bg-blob bg-blob-2"></div>
+<div class="bg-blob bg-blob-3"></div>
+<div class="bg-blob bg-blob-4"></div>
+
 <div class="wrap">
 
   <div class="top-bar">
@@ -1090,6 +1144,31 @@
   }
 
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Pantalla de bienvenida: muestra el logo un instante y luego se desvanece
+  window.addEventListener('load', () => {
+    const intro = document.getElementById('introOverlay');
+    setTimeout(() => {
+      intro.classList.add('fade-out');
+      setTimeout(() => intro.remove(), 700);
+    }, 900);
+  });
+
+  // Animación sutil al hacer scroll: las tarjetas aparecen con un ligero desplazamiento
+  const revealEls = document.querySelectorAll('.service-pill, .solution-card, .collage-card, .mv-card, .fact-card');
+  revealEls.forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.transitionDelay = ((i % 6) * 0.07) + 's';
+  });
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => revealObserver.observe(el));
 </script>
 </body>
 </html>
