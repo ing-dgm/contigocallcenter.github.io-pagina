@@ -553,6 +553,45 @@
   }
   .mv-card p { color: #475569; font-size: 15px; line-height: 1.7; margin: 0; }
 
+  /* Datos de la empresa */
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .fact-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 18px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(10,37,64,.04);
+    transition: all .3s ease;
+  }
+  .fact-card:hover {
+    border-color: var(--blue);
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(20,85,192,.10);
+  }
+  .fact-card i { font-size: 22px; color: var(--blue); margin-bottom: 10px; display: block; }
+  .fact-card .fact-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .fact-card .fact-value {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    color: var(--navy);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
   /* Contacto */
   .contact-layout {
     display: grid;
@@ -635,6 +674,7 @@
     .hero { padding: 40px 30px; min-height: auto; }
     .hero h1 { font-size: 32px; }
     .contact-layout { grid-template-columns: 1fr; max-width: 560px; }
+    .facts-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
@@ -711,6 +751,46 @@
           <p>Para el 2027, Contigo Callcenter se posicionará como un aliado estratégico clave para sus clientes, fundamentada en la estabilidad y el mejoramiento continuo de sus procesos. Su enfoque será generar atención de calidad y maximizar la eficiencia operativa.</p>
         </div>
       </div>
+    </div>
+
+    <div class="section-title" style="margin-top: 50px;">Nuestra Empresa en Cifras</div>
+    <div class="section-subtitle">Datos que respaldan nuestra trayectoria y formalidad.</div>
+    <div class="facts-grid">
+      <div class="fact-card">
+        <i class="fa-solid fa-building"></i>
+        <div class="fact-label">Razón Social</div>
+        <div class="fact-value">Contigo Call Center S.A.S.</div>
+      </div>
+      <div class="fact-card">
+        <i class="fa-solid fa-id-card"></i>
+        <div class="fact-label">NIT</div>
+        <div class="fact-value">901.644.425</div>
+      </div>
+      <div class="fact-card">
+        <i class="fa-solid fa-calendar-days"></i>
+        <div class="fact-label">Trayectoria</div>
+        <div class="fact-value">Desde 2022 · +4 años</div>
+      </div>
+      <div class="fact-card">
+        <i class="fa-solid fa-headset"></i>
+        <div class="fact-label">Actividad Económica</div>
+        <div class="fact-value">Centros de Llamadas (CIIU 8220)</div>
+      </div>
+      <div class="fact-card">
+        <i class="fa-solid fa-location-dot"></i>
+        <div class="fact-label">Ubicación</div>
+        <div class="fact-value">Bogotá, D.C.</div>
+      </div>
+      <div class="fact-card">
+        <i class="fa-solid fa-sitemap"></i>
+        <div class="fact-label">Forma Jurídica</div>
+        <div class="fact-value">Sociedad por Acciones Simplificada</div>
+      </div>
+    </div>
+
+    <div class="teaser-cta" style="margin-top: 36px;">
+      <p style="font-family:'Manrope', sans-serif; font-weight: 700; color: var(--navy); font-size: 16px; margin-bottom: 16px;">¿Quieres saber más de nosotros?</p>
+      <a href="#" class="btn-primary" data-target="contacto">Contáctanos &rarr;</a>
     </div>
   </section>
 
