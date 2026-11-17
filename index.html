@@ -706,6 +706,20 @@
     border-radius: 8px;
     font-size: 14px;
   }
+  .form-error {
+    display: none;
+    background: #FEF2F2;
+    border: 1px solid #EF4444;
+    color: #991B1B;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  .contact-form input[type="file"] {
+    padding: 10px 14px;
+    font-size: 13px;
+    background: #F8FAFC;
+  }
 
   .page { display: none; }
   .page.active { display: block; }
@@ -982,21 +996,34 @@
       </div>
 
       <div class="contact-form-card">
-    <form class="contact-form" id="contactForm">
+    <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="access_key" value="bfb6b2df-c192-4cea-8e93-0cdeaf9da4f7">
+      <input type="hidden" name="from_name" value="Formulario web - Contigo Call Center">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
       <div>
         <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre" name="nombre" required>
+        <input type="text" id="nombre" name="name" required>
       </div>
       <div>
         <label for="correo">Correo electrónico</label>
-        <input type="email" id="correo" name="correo" required>
+        <input type="email" id="correo" name="email" required>
+      </div>
+      <div>
+        <label for="asunto">Asunto</label>
+        <input type="text" id="asunto" name="subject" required>
       </div>
       <div>
         <label for="mensaje">¿Cómo podemos ayudarte?</label>
-        <textarea id="mensaje" name="mensaje" required></textarea>
+        <textarea id="mensaje" name="message" required></textarea>
       </div>
-      <button type="submit" class="btn-primary">Enviar Mensaje</button>
+      <div>
+        <label for="cv">Adjuntar hoja de vida (opcional, máx. 10MB)</label>
+        <input type="file" id="cv" name="attachment" accept=".pdf,.doc,.docx">
+      </div>
+      <button type="submit" class="btn-primary" id="submitBtn">Enviar Mensaje</button>
       <div class="form-success" id="formSuccess"></div>
+      <div class="form-error" id="formError"></div>
     </form>
       </div>
     </div>
@@ -1023,17 +1050,55 @@
     });
   });
 
-  // Formulario de contacto (front-end únicamente).
-  // Para que los mensajes lleguen de verdad a un correo, conecta este formulario
-  // a un servicio como Formspree (https://formspree.io) o similar.
+  // Formulario de contacto: envío real mediante Web3Forms (gratuito).
+  // Los mensajes llegan directo al correo configurado en el "access_key" del formulario.
   const form = document.getElementById('contactForm');
   const success = document.getElementById('formSuccess');
-  form.addEventListener('submit', (e) => {
+  const errorBox = document.getElementById('formError');
+  const submitBtn = document.getElementById('submitBtn');
+  const cvInput = document.getElementById('cv');
+  const MAX_CV_SIZE = 10 * 1024 * 1024; // 10MB
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    success.style.display = 'none';
+    errorBox.style.display = 'none';
+
+    // Validar tamaño máximo del adjunto (10MB)
+    if (cvInput.files.length > 0 && cvInput.files[0].size > MAX_CV_SIZE) {
+      errorBox.textContent = 'El archivo adjunto supera el tamaño máximo permitido de 10MB. Por favor, adjunta un archivo más liviano.';
+      errorBox.style.display = 'block';
+      return;
+    }
+
     const nombre = document.getElementById('nombre').value;
-    success.textContent = `¡Gracias ${nombre}! Tu mensaje ha sido enviado correctamente.`;
-    success.style.display = 'block';
-    form.reset();
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.textContent = 'Enviando...';
+    submitBtn.disabled = true;
+
+    try {
+      const formData = new FormData(form);
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+      const result = await response.json();
+
+      if (response.status === 200) {
+        success.textContent = `¡Gracias ${nombre}! Tu mensaje ha sido enviado correctamente. Te responderemos pronto.`;
+        success.style.display = 'block';
+        form.reset();
+      } else {
+        throw new Error(result.message || 'No se pudo enviar el mensaje.');
+      }
+    } catch (err) {
+      errorBox.textContent = 'Hubo un problema al enviar tu mensaje. Por favor, inténtalo de nuevo o escríbenos directamente a contacto@contigocallcenter.com.';
+      errorBox.style.display = 'block';
+    } finally {
+      submitBtn.textContent = originalBtnText;
+      submitBtn.disabled = false;
+    }
   });
 
   document.getElementById('year').textContent = new Date().getFullYear();
