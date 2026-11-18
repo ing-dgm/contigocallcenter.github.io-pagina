@@ -757,6 +757,49 @@
     line-height: 1.4;
   }
 
+  /* Cultura del equipo (sin fotos de personas, por Habeas Data) */
+  .culture-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .culture-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(10,37,64,.04);
+    transition: all .3s ease;
+  }
+  .culture-card:hover {
+    border-color: var(--blue);
+    transform: translateY(-6px);
+    box-shadow: 0 14px 28px rgba(20,85,192,.12);
+  }
+  .culture-card i {
+    font-size: 24px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .culture-card h4 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--navy);
+    margin: 0 0 8px;
+  }
+  .culture-card p { font-size: 13.5px; color: var(--muted); line-height: 1.6; margin: 0; }
+
   /* Contacto */
   .contact-layout {
     display: grid;
@@ -903,6 +946,7 @@
     .hero h1 { font-size: 32px; }
     .contact-layout { grid-template-columns: 1fr; max-width: 560px; }
     .facts-grid { grid-template-columns: 1fr 1fr; }
+    .culture-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
@@ -1032,6 +1076,31 @@
       </div>
     </div>
 
+    <div class="section-title" style="margin-top: 50px;">La Cultura de Nuestro Equipo</div>
+    <div class="section-subtitle">Lo que se vive todos los días dentro de Contigo Call Center.</div>
+    <div class="culture-grid">
+      <div class="culture-card">
+        <i class="fa-solid fa-people-group"></i>
+        <h4>Trabajo en Equipo</h4>
+        <p>Colaboramos día a día, apoyándonos entre áreas para lograr juntos cada objetivo.</p>
+      </div>
+      <div class="culture-card">
+        <i class="fa-solid fa-heart"></i>
+        <h4>Cercanía y Compromiso</h4>
+        <p>Un ambiente humano y cercano, comprometido con el bienestar de cada colaborador.</p>
+      </div>
+      <div class="culture-card">
+        <i class="fa-solid fa-arrow-trend-up"></i>
+        <h4>Crecimiento Profesional</h4>
+        <p>Oportunidades reales de aprendizaje y desarrollo dentro de la compañía.</p>
+      </div>
+      <div class="culture-card">
+        <i class="fa-solid fa-face-smile"></i>
+        <h4>Ambiente Dinámico</h4>
+        <p>Espacios pensados para disfrutar el día a día mientras creces con nosotros.</p>
+      </div>
+    </div>
+
     <div class="teaser-cta" style="margin-top: 36px;">
       <p style="font-family:'Manrope', sans-serif; font-weight: 700; color: var(--navy); font-size: 16px; margin-bottom: 16px;">¿Quieres saber más de nosotros?</p>
       <a href="#" class="btn-primary" data-target="contacto">Contáctanos &rarr;</a>
@@ -1090,16 +1159,6 @@
         </div>
         <div class="collage-caption">Cafetería</div>
       </div>
-    </div>
-
-    <div class="section-title" style="margin-top: 50px;">Conoce a tu equipo de trabajo</div>
-    <div class="section-subtitle">Nuestras instalaciones modernas diseñadas para inspirar innovación, trabajo en equipo y crecimiento continuo.</div>
-    <div class="collage">
-      <div class="collage-card r1"><img src="images/C1.jpg" alt="Instalaciones 1"></div>
-      <div class="collage-card r2"><img src="images/C2.jpg" alt="Instalaciones 2"></div>
-      <div class="collage-card r3"><img src="images/C3.jpg" alt="Instalaciones 3"></div>
-      <div class="collage-card r4"><img src="images/C4.jpg" alt="Instalaciones 4"></div>
-      <div class="collage-card r5"><img src="images/C5.jpg" alt="Instalaciones 5"></div>
     </div>
 
     <div class="section-title" style="margin-top: 50px;">Cerca de nosotros</div>
@@ -1303,7 +1362,7 @@
   });
 
   // Animación sutil al hacer scroll: las tarjetas aparecen con un ligero desplazamiento
-  const revealEls = document.querySelectorAll('.service-pill, .solution-card, .collage-card, .mv-card, .fact-card');
+  const revealEls = document.querySelectorAll('.service-pill, .solution-card, .collage-card, .mv-card, .fact-card, .culture-card');
   revealEls.forEach((el, i) => {
     el.classList.add('reveal');
     el.style.transitionDelay = ((i % 6) * 0.07) + 's';
